@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사건일 기반 도서 대출 횟수 비교</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!-- <link rel="stylesheet" href="/static/css/css.css"> -->
+    <link rel="stylesheet" href="/static/css/loanRankByDate.css">
+    <script src="/static/js/banner.js"></script>
+    <link rel="stylesheet" href="/static/css/banner.css">
+    <script src="/static/js/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="/static/css/flatpickr.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+          <div class="logo">
+            <a href="index.html">Book Mate</a>
+          </div>
+          <div class="nav-menu">
+            <a href="pages/age/ageAnalysis.html">Book Trend</a>
+            <a href="/loanRankByDate">Date Analysis</a>
+            <a href="/pages/event/eventList.html">Event List</a>
+          </div>
+        </div>
+      </div>
+      <div class="ad-banner ad-left">
+        <div class="poster-img-box"></div>
+        <div class="banner-caption"></div>
+      </div>
+      <div class="ad-banner ad-right">
+        <div class="poster-img-box"></div>
+        <div class="banner-caption"></div>
+      </div>
+    <div class="main-content" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:70vh; margin-bottom:56px;">
+        <div class="top6-title" style="text-align:center;color:#2d3057;font-size:1.85rem;font-weight:800;margin-bottom:24px;letter-spacing:0.5px; margin-top:56px;">이벤트가 만든 도서관 대출 변화, 지금 확인하세요!</div>
+        <!-- 날짜 선택 버튼 -->
+        <button type="button" id="calendarBtn" class="signup-btn" style="margin-bottom:1px; width:30%; font-size:1.25rem; display:flex; align-items:center; justify-content:center; gap:10px; padding:14px 0; border-radius:24px; box-shadow:0 2px 8px rgba(68, 68, 68, 0.06);">
+            <i class="fa-solid fa-calendar-days"></i> &nbsp;날짜 직접 선택하기&nbsp;
+        </button>
+        <!-- 사건일 리스트 -->
+        <div class="event-list-center" style="background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0, 0, 0, 0.993); padding:48px 36px 56px 36px; min-width:350px; max-width:520px; width:100%; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
+            <div class="top6-desc" style="margin:18px 0 12px 0; text-align:center; font-size:2.13rem; color:#2d3057; font-weight:600; letter-spacing:0.2px;">
+                조회수 기준 TOP 6 이벤트
+            </div>
+            <ul class="books-list" style="flex-direction:column;gap:18px;width:100%;">
+                <% top6Dates.forEach((item, idx) => { %>
+                    <li style="display:flex;align-items:center;gap:32px;background:#fff;border-radius:8px;padding:18px 20px;font-size:1.13rem;color:#222;font-weight:500;box-shadow:0 1px 6px rgba(160,89,255,0.04);">
+                        <img src="<%= item.EVENT_THUMBNAIL_URL %>" alt="썸네일" style="width:112px;height:112px;object-fit:cover;border-radius:12px;box-shadow:0 1px 3px rgba(160,89,255,0.08);">
+                        <div style="flex:1;">
+                            <div class="event-title" style="font-weight:600;color:#2d3057;">
+                                <%= idx+1 %>. 
+                                <a href="/viewAnalysis?eventDate=<%= encodeURIComponent(item.EVENT_DATE) %>" style="color:#2d3057;text-decoration:none;">
+                                    <%= item.EVENT_NAME %>
+                                </a>
+                            </div>
+                            <div class="event-date" style="font-size:1.02rem;color:#888;"><%= item.EVENT_DATE %></div>
+                        </div>
+                        <span class="event-viewcount" style="font-size:1.08rem;color:#3e4a5b;white-space:nowrap;"><i class="fa-solid fa-eye"></i> <%= item.VIEW_COUNT %>회</span>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+        <!-- 달력 모달 -->
+        <div id="calendarModal" class="modal-bg" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(45,48,87,0.13);align-items:center;justify-content:center;">
+            <form method="get" action="/viewAnalysis" style="background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(45,48,87,0.19);padding:32px 28px;min-width:320px;max-width:40vw;width:40vw;position:relative;display:flex;flex-direction:column;align-items:center;">
+                <button id="modalCloseBtn" type="button" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.5rem;color:#888;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                <div style="width:100%;text-align:center;font-size:1.12rem;font-weight:600;color:#2d3057;margin-bottom:18px;">분석하고 싶은 날짜를 선택하세요.</div>
+                <div id="calendar-inline"></div>
+                <input type="hidden" id="eventDateInput" name="eventDate">
+                <input type="submit" value="분석하기" class="signup-btn modal-submit-btn" style="width:120px; margin-top:18px;">
+            </form>
+        </div>
+    </div>
+    <style>
+    .modal-submit-btn {
+        background: #222 !important;
+        color: #fff !important;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 0;
+        font-size: 1.08rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .modal-submit-btn:hover {
+        background: #ff9900 !important;
+        color: #222 !important;
+    }
+    </style>
+    <script>
+        // 반드시 전역에 선언! (중복 방지)
+        let fp;
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarBtn = document.getElementById('calendarBtn');
+            const calendarModal = document.getElementById('calendarModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const eventDateInput = document.getElementById('eventDateInput');
+
+            function openModal() {
+                calendarModal.style.display = 'flex';
+                console.log('openModal 실행됨');
+                const calendarDiv = document.getElementById('calendar-inline');
+                console.log('calendarDiv:', calendarDiv);
+                const today = new Date();
+                const twoWeeksAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14);
+                const yyyy = twoWeeksAgo.getFullYear();
+                const mm = String(twoWeeksAgo.getMonth() + 1).padStart(2, '0');
+                const dd = String(twoWeeksAgo.getDate()).padStart(2, '0');
+                const twoWeeksAgoStr = `${yyyy}-${mm}-${dd}`;
+                if (fp) {
+                    fp.destroy(); // 기존 인스턴스 제거
+                    fp = null;
+                }
+                console.log('flatpickr 새로 초기화!');
+                fp = flatpickr("#calendar-inline", {
+                    inline: true,
+                    dateFormat: "Y-m-d",
+                    defaultDate: twoWeeksAgoStr,
+                    maxDate: twoWeeksAgoStr,
+                    onChange: function(selectedDates, dateStr) {
+                        if (dateStr > twoWeeksAgoStr) {
+                            alert(`금일로부터 2주 전(${twoWeeksAgoStr}) 이후의 날짜는 선택할 수 없습니다! ${twoWeeksAgoStr} 보다 이전 날짜를 선택해주세요.`);
+                            fp.setDate(twoWeeksAgoStr, true);
+                        } else {
+                            eventDateInput.value = dateStr;
+                        }
+                    },
+                    onMonthChange: function(selectedDates, dateStr, instance) {
+                        const currentMonth = instance.currentMonth;
+                        const currentYear = instance.currentYear;
+                        const twoWeeksAgoDate = new Date(twoWeeksAgoStr);
+                        if (currentYear > twoWeeksAgoDate.getFullYear() ||
+                            (currentYear === twoWeeksAgoDate.getFullYear() && currentMonth > twoWeeksAgoDate.getMonth())) {
+                            alert(`금일로부터 2주 전(${twoWeeksAgoStr}) 이후의 날짜는 선택할 수 없습니다! ${twoWeeksAgoStr} 보다 이전 날짜를 선택해주세요.`);
+                            instance.changeMonth(twoWeeksAgoDate.getMonth() - currentMonth);
+                            instance.changeYear(twoWeeksAgoDate.getFullYear());
+                        }
+                    },
+                    onYearChange: function(selectedDates, dateStr, instance) {
+                        const currentYear = instance.currentYear;
+                        const twoWeeksAgoDate = new Date(twoWeeksAgoStr);
+                        if (currentYear > twoWeeksAgoDate.getFullYear()) {
+                            alert(`금일로부터 2주 전(${twoWeeksAgoStr}) 이후의 날짜는 선택할 수 없습니다! ${twoWeeksAgoStr} 보다 이전 날짜를 선택해주세요.`);
+                            instance.changeYear(twoWeeksAgoDate.getFullYear());
+                        }
+                    }
+                });
+            }
+            if (calendarBtn) calendarBtn.addEventListener('click', openModal);
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', function() {
+                calendarModal.style.display = 'none';
+            });
+            if (calendarModal) calendarModal.addEventListener('click', function(e) {
+                if (e.target === calendarModal) calendarModal.style.display = 'none';
+            });
+        });
+    </script>
+    <script>
+      // 광고 포스터를 랜덤으로 불러와서 좌우 배너에 적용
+      fetch('http://192.168.1.28:5000/posters')
+        .then(res => res.json())
+        .then(posters => {
+          if (posters.length > 0) {
+            const leftPoster = posters[Math.floor(Math.random() * posters.length)];
+            const rightPoster = posters[Math.floor(Math.random() * posters.length)];
+
+            document.querySelector('.ad-left .poster-img-box').style.backgroundImage = `url(${leftPoster.url})`;
+            document.querySelector('.ad-left .banner-caption').textContent = leftPoster.title;
+
+            document.querySelector('.ad-right .poster-img-box').style.backgroundImage = `url(${rightPoster.url})`;
+            document.querySelector('.ad-right .banner-caption').textContent = rightPoster.title;
+          }
+        });
+    </script>
+</body>
+</html>

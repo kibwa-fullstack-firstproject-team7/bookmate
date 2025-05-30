@@ -1,0 +1,218 @@
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    color: #222;
+  }
+
+  .logo a{
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: -2px;
+    color: black;
+    text-decoration: none;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px 16px 48px;
+    border-bottom: 1px solid #353434;
+    font-family: 'Montserrat', Arial, sans-serif;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav-menu {
+    display: flex;
+    gap: 24px;
+    margin-top: 5px;
+  }
+  .nav-menu a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color .2s;
+  }
+  .nav-menu a:hover {
+    color: #ff9900;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .search-box {
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 1rem;
+    outline: none;
+  }
+  .signup-btn {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .signup-btn:hover {
+    background: #ff9900;
+    color: #222;
+  }
+  .main-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-height: 70vh;
+    gap: 80px;
+  }
+  
+  .headline {
+    padding-left: 24%;
+    padding-bottom: 60px;
+    margin-bottom: 11%;
+  }
+  .best-choice {
+    color: #ff9900;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .big-title {
+    font-size: 7rem;
+    font-weight: bold;
+    line-height: 1.05;
+    letter-spacing: -4px;
+    margin: 0 0 24px 0;
+  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 24px 0 32px 0;
+  }
+  .search-form input {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+  }
+  .search-form button {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+  }
+  .search-form button:hover {
+    background: #ff9900;
+    color: #222;
+  }
+  .desc {
+    color: #555;
+    font-size: 1rem;
+    margin-top: 32px;
+    max-width: 420px;
+    word-break: keep-all;
+  }
+  .desc a {
+    color: #ff9900;
+    text-decoration: underline;
+  }
+  .books {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    flex: 1;
+    margin-bottom: 32px;
+    perspective: 800px;
+  }
+  .book {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 15%;
+    color: #fff;
+    font-size: 17.6px;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    box-shadow: 10px 8px 0px rgb(29, 29, 29);
+    letter-spacing: 2px;
+    position: relative;
+    margin-top: 50px;
+    font-size: 30px;
+    transition: transform 0.5s ease;
+    transform-origin: left bottom;
+  }
+  .book:hover {
+    transform: rotateZ(75deg);
+    transition-delay: 0s;
+    cursor: pointer;
+  }
+  .books:hover .book:nth-child(1) {
+    transition-delay: 0.1s;
+    transform-origin: left bottom;
+    transform: rotateZ(15deg);
+    z-index: 3;
+  }
+  .books:hover .book:nth-child(2) {
+    transition-delay: 0.2s;
+    transform-origin: 30% 100%;
+    transform: translateX(10px) rotateZ(15deg);
+    z-index: 2;
+  }
+  .books:hover .book:nth-child(3) {
+    transition-delay: 0.3s;
+    transform-origin: 30% 100%;
+    transform: translateX(15px) rotateZ(15deg);
+    z-index: 1;
+  }
+  .book.BookTrend {
+    background: #c00b0b; 
+    height: 85%;
+  }
+  .book.DateAnalysis {
+    background: #1f355d; 
+    height: 77%;
+  }
+  .book.nonfiction { 
+    background: #ffbe3b; color: #222;
+    height: 89%;
+  }
+  
+  .book .plus {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+    color: #fff;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

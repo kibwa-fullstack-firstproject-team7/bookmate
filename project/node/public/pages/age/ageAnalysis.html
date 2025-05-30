@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books For All</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <link href="/static/css/ageAnalysis.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="logo">
+        <a href="../../index.html">Book Mate</a>
+      </div>
+      <div class="nav-menu">
+        <a href="/pages/age/ageAnalysis.html">Book Trend</a>
+        <a href="/loanRankByDate">Date Analysis</a>
+        <a href="/pages/event/eventList.html">Event List</a>
+      </div>
+    </div>
+  </div>
+        <form id="searchForm" method="get">
+        <div class="form-label">Book Trend</div>
+        <div class="form-text">어떤 세대의 독서 성향을 확인할까요?</div>
+        <div class="form-text">세대를 선택하시면 그 세대의 독서 성향을 확인할 수 있습니다.</div>
+        <div class="custom-dropdown" id="customDropdown">
+          <div class="dropdown-selected" id="dropdownSelected">세대 선택</div>
+          <ul class="dropdown-options" id="dropdownOptions" style="display:none;">
+            <li data-value="17">Z세대 후반 (17~21세)</li>
+            <li data-value="22">Z세대 중심 (22~26세)</li>
+            <li data-value="27">밀레니얼 후반 (27~31세)</li>
+            <li data-value="32">밀레니얼 중반 (32~36세)</li>
+            <li data-value="37">밀레니얼 초반 (37~41세)</li>
+          </ul>
+          <input type="hidden" name="ageGroup" id="ageGroupInput" />
+        </div>
+        <button class="submit-btn">조회</button>
+      </form>
+      <div id="graph-container" style="max-width: 500px; margin: 40px auto 0 auto; text-align:center;">
+        <canvas id="genreChart" width="1400" height="500"></canvas>
+      </div>
+      <div id="top-books"></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="/static/js/ageAnalysis.js"></script>
+    <script src="/static/js/customDropdown.js"></script>
+    <input id="userAddr" type="hidden" value="서울특별시 서초구 서초2동"></input>
+</body>
+</html>
